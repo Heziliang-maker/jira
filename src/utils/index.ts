@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { IParam } from "../pages/screens/project-list/index";
 export const isFalsy = (value: unknown) => (value === 0 ? true : !!value);
 
 export const cleanObj = <T extends object, K extends keyof T>(obj: T): {} => {
-  const result: T = { ...obj };
+  const result = { ...obj };
   Object.keys(result).forEach((key) => {
-    // @ts-ignore
-    let value = result[key];
+    let value = result[key as K];
     if (!isFalsy(value)) {
-      // @ts-ignore
-      delete result[key];
+      delete result[key as K];
     }
   });
   return result;
@@ -34,7 +31,7 @@ export const useMount = (cb: () => void) => {
 //   };
 // };
 
-export const useDebounce = (value: any, time: number = 500) => {
+export const useDebounce = <T>(value: T, time: number = 500): T => {
   const [debonceValue, setDebounceValue] = useState(value);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,4 +43,22 @@ export const useDebounce = (value: any, time: number = 500) => {
   }, [value, time]);
 
   return debonceValue;
+};
+
+export const useArray = <T>(persons: T[]) => {
+  const [value, setValue] = useState(persons);
+  return {
+    value,
+    add: (person: T): void => {
+      setValue([...value, { ...person }]);
+    },
+    removeIndex: (index: number): void => {
+      const result = [...value];
+      result.splice(index, 1);
+      setValue(result);
+    },
+    clear: (): void => {
+      setValue([]);
+    },
+  };
 };

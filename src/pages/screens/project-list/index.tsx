@@ -2,7 +2,7 @@ import { List } from "./List";
 import { SearchPannel } from "./SearchPannel";
 import React, { useState, useEffect } from "react";
 import qs from "qs";
-import { cleanObj, useMount, useDebounce } from "../../../utils";
+import { cleanObj, useMount, useDebounce, useArray } from "../../../utils";
 const BASEURL = process.env.REACT_APP_API_URL;
 
 export interface IParam {
@@ -44,6 +44,31 @@ export default () => {
     <div>
       <List list={list} users={users} />
       <SearchPannel param={param} setParam={setParam} users={users} />
+    </div>
+  );
+};
+
+export const Test: React.FC = () => {
+  let persons2 = [
+    { id: 1, name: "1" },
+    { id: 2, name: "2" },
+    { id: 3, name: "3" },
+    { id: 4, name: "4" },
+  ];
+
+  const { add, value, removeIndex, clear } = useArray(persons2);
+  return (
+    <div>
+      <ul>
+        <li onClick={() => add({ id: value.length + 1, name: "liu" })}>add</li>
+        <li onClick={() => removeIndex(0)}>removeIndex</li>
+        <li onClick={() => clear()}>clear</li>
+      </ul>
+      <ul>
+        {value.map((person) => (
+          <li key={person.id}>{person.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
