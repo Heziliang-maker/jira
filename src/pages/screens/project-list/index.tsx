@@ -3,6 +3,7 @@ import { SearchPannel } from "./SearchPannel";
 import React, { useState, useEffect } from "react";
 import qs from "qs";
 import { cleanObj, useMount, useDebounce, useArray } from "../../../utils";
+import { useHttp } from "../../../http";
 const BASEURL = process.env.REACT_APP_API_URL;
 
 export interface IParam {
@@ -10,7 +11,7 @@ export interface IParam {
   personId: string;
 }
 
-export default () => {
+export const ProjectList: React.FC = () => {
   const [param, setParam] = useState({
     name: "",
     personId: "",
@@ -19,25 +20,19 @@ export default () => {
   const [list, setList] = useState([]);
   const [users, setUsers] = useState([]);
 
+  const client = useHttp();
+
   const deboucedParam = useDebounce(param, 1000);
   // 参数变化 获取数据
   useEffect(() => {
     // name=${param.name}&personId=${param.personId}
-    const url = `${BASEURL}/projects?${qs.stringify(cleanObj(deboucedParam))}`;
-    fetch(url).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    const url = `${BASEURL}`;
+    client(`projects`, { data: cleanObj(deboucedParam) }).then(setList);
   }, [useDebounce(deboucedParam)]);
   // 初始化
   useMount(() => {
-    const url = `${BASEURL}/users`;
-    fetch(url).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
+    client("users").then(setUsers);
+    console.log("=>", "users");
   });
 
   return (
