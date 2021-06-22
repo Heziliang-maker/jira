@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 export const isFalsy = (value: unknown) => (value === 0 ? true : !!value);
 
 export const cleanObj = <T extends object, K extends keyof T>(obj: T): {} => {
+  // Reference http://semlinker.com/ts-keyof/
   const result = { ...obj };
   Object.keys(result).forEach((key) => {
     let value = result[key as K];
@@ -18,18 +19,6 @@ export const useMount = (cb: () => void) => {
     cb();
   }, []);
 };
-
-// export const useDebounce = (cb, time = 500, ...params) => {
-//   let timer;
-//   return (...params) => {
-//     if (timer) {
-//       clearTimeout(timer);
-//     }
-//     timer = setTimeout(() => {
-//       cb(...params);
-//     }, time);
-//   };
-// };
 
 export const useDebounce = <T>(value: T, time: number = 500): T => {
   const [debonceValue, setDebounceValue] = useState(value);
