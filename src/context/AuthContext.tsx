@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   auth.login(form).then((user) => setUser(user));
   // ===> POINT FREE
   const login = (form: IAuthForm) => auth.login(form).then(setUser);
-  const register = (form: IAuthForm) => auth.register(form).then();
+  const register = (form: IAuthForm) => auth.register(form);
   const logout = () => auth.logout().then(() => setUser(null));
   return (
     <authContext.Provider value={{ user, login, register, logout }}>

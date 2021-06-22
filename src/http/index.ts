@@ -24,7 +24,7 @@ export const http = (
     ...customConfig,
   };
   if (config.method.toUpperCase() === "GET") {
-    url += qs.stringify(data);
+    url += `?${qs.stringify(data)}`;
   } else {
     config.body = JSON.stringify(data || {});
   }
