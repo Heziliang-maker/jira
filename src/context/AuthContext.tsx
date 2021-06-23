@@ -23,7 +23,7 @@ const authContext =
   createContext<
     | {
         user: IUser | null;
-        register: (form: IAuthForm) => Promise<void>;
+        register: (form: IAuthForm) => void;
         login: (form: IAuthForm) => Promise<void>;
         logout: () => Promise<void>;
       }
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   auth.login(form).then((user) => setUser(user));
   // ===> POINT FREE
   const login = (form: IAuthForm) => auth.login(form).then(setUser);
-  const register = (form: IAuthForm) => auth.register(form).then(setUser);
+  const register = (form: IAuthForm) => auth.register(form);
   const logout = () => auth.logout().then(() => setUser(null));
 
   useMount(() => {

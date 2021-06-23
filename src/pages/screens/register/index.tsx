@@ -1,7 +1,6 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../../../context/AuthContext";
 
-
 export const RegisterScreen: React.FC = () => {
   const { register } = useAuth();
 

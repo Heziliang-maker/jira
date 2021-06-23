@@ -1,34 +1,48 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../../../context/AuthContext";
+import { Form, Input, Button } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 export const LoginScreen: React.FC = () => {
   const { login, user } = useAuth();
-  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    const username = (evt.currentTarget.elements[0] as HTMLInputElement).value;
-    const password = (evt.currentTarget.elements[1] as HTMLInputElement).value;
 
-    // const res = await login();
-    login({ username, password });
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    login(values);
   };
   return (
     <>
       {user && <p>用户名为:{user.name}</p>}
-      <form
-        onSubmit={(evt) => {
+      <Form
+        onFinish={(evt) => {
           handleSubmit(evt);
         }}
       >
-        <div>
-          <label htmlFor="username">用户名</label>
-          <input type="text" id="username" />
-        </div>
-        <div>
-          <label htmlFor="password">密码</label>
-          <input type="password" id="password" />
-        </div>
-        <button type="submit">登录 </button>
-      </form>
+        <Form.Item
+          name="username"
+          rules={[{ required: true, message: "请输入用户名" }]}
+        >
+          <Input placeholder="用户名" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "请输入密码" }]}
+        >
+          <Input.Password
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+            placeholder="密码"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit" type="primary">
+            登录
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 };

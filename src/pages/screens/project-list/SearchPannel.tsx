@@ -1,5 +1,6 @@
 import React, { SetStateAction } from "react";
 import { IParam } from "./index";
+import { Input, Select } from "antd";
 
 export interface IUser {
   id: string;
@@ -18,7 +19,8 @@ export const SearchPannel: React.FC<IPropsType> = ({
   return (
     <form>
       <div>
-        <input
+        <Input
+          placeholder="项目名称"
           type="text"
           value={param.name}
           onChange={(evt) =>
@@ -28,22 +30,22 @@ export const SearchPannel: React.FC<IPropsType> = ({
             })
           }
         />
-        <select
+        <Select
           value={param.personId}
-          onChange={(evt) =>
+          onChange={(value) =>
             setParam({
               ...param,
-              personId: evt.target.value,
+              personId: value,
             })
           }
         >
-          <option value="">负责人</option>
+          <Select.Option value="">负责人</Select.Option>
           {users.map((user) => (
-            <option key={user.id} value={user.id}>
+            <Select.Option key={user.id} value={user.id}>
               {user.name}
-            </option>
+            </Select.Option>
           ))}
-        </select>
+        </Select>
       </div>
     </form>
   );
