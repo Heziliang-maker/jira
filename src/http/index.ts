@@ -5,7 +5,7 @@ import { logout } from "../auth/auth-provider";
 const BASEURL = process.env.REACT_APP_API_URL;
 
 interface Config extends RequestInit {
-  data?: any;
+  data?: object;
   token?: string;
 }
 
@@ -24,7 +24,7 @@ export const http = (
     ...customConfig,
   };
   if (config.method.toUpperCase() === "GET") {
-    url += qs.stringify(data);
+    url += `?${qs.stringify(data)}`;
   } else {
     config.body = JSON.stringify(data || {});
   }

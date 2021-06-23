@@ -1,10 +1,8 @@
 import { List } from "./List";
 import { SearchPannel } from "./SearchPannel";
 import React, { useState, useEffect } from "react";
-import qs from "qs";
 import { cleanObj, useMount, useDebounce, useArray } from "../../../utils";
 import { useHttp } from "../../../http";
-const BASEURL = process.env.REACT_APP_API_URL;
 
 export interface IParam {
   name: string;
@@ -26,13 +24,11 @@ export const ProjectList: React.FC = () => {
   // 参数变化 获取数据
   useEffect(() => {
     // name=${param.name}&personId=${param.personId}
-    const url = `${BASEURL}`;
     client(`projects`, { data: cleanObj(deboucedParam) }).then(setList);
   }, [useDebounce(deboucedParam)]);
   // 初始化
   useMount(() => {
     client("users").then(setUsers);
-    console.log("=>", "users");
   });
 
   return (

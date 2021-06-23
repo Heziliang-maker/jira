@@ -1,17 +1,29 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 import { IUser } from "../auth/auth-provider";
 import * as auth from "../auth/auth-provider";
+import { GET_TOKEN } from "../utils/auth";
+import { http } from "../http";
+import { useMount } from "../utils";
 
 interface IAuthForm {
   username: string;
   password: string;
 }
 
+export const bootstrapUser = async () => {
+  let user = null;
+  const token = GET_TOKEN();
+  if (token) {
+    user = await http("me", { token });
+  }
+  return user;
+};
+
 const authContext =
   createContext<
     | {
         user: IUser | null;
-        register: (form: IAuthForm) => void;
+        register: (form: IAuthForm) => Promise<void>;
         login: (form: IAuthForm) => Promise<void>;
         logout: () => Promise<void>;
       }
@@ -25,8 +37,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   auth.login(form).then((user) => setUser(user));
   // ===> POINT FREE
   const login = (form: IAuthForm) => auth.login(form).then(setUser);
-  const register = (form: IAuthForm) => auth.register(form).then();
+  const register = (form: IAuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
+
+  useMount(() => {
+    bootstrapUser().then(setUser);
+  });
+
   return (
     <authContext.Provider value={{ user, login, register, logout }}>
       {children}
