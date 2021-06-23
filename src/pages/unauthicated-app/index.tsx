@@ -6,13 +6,15 @@ import { Card, Divider } from "antd";
 export const UnAuthicatedApp: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false);
   return (
-    <div className={"bg-black  mx-auto w-1/3 mt-20"}>
-      <Card>
+    <div className={"  mx-auto mt-20 w-100"}>
+      <Card className={"rounded"}>
         {isLogin ? <RegisterScreen /> : <LoginScreen />}
         <Divider />
-        <a onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? "已经有账号了?直接登录" : "没有账号?立即注册"}
-        </a>
+        <div className={"text-center"}>
+          <a onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "已经有账号了?直接登录" : "没有账号?立即注册"}
+          </a>
+        </div>
       </Card>
     </div>
   );
