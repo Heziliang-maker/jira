@@ -59,7 +59,11 @@ module.exports = {
 
 - yarn add @emotion/react @emotion/styled
 
-#### 其他: // css modules [参考这篇](https://juejin.cn/post/6844903633109139464)
+#### 其他: // css modules
+
+    - [参考这篇/上](https://juejin.cn/post/6844903633109139464)
+    - [参考这篇/中](https://juejin.cn/post/6844903633662771207)
+    - [参考这篇/下](https://juejin.cn/post/6844903638289252360)
 
 1. class 名必须是驼峰形式，否则不能正常在 js 里使用 styles.table 来引用
 2. 由于 css 模块化是默认，当你希望使用正常的全局 css 时，需要通过:local 和 :global 切换，不方便
@@ -71,6 +75,70 @@ module.exports = {
 
 #### 其他: // Css-in-Js 新浪潮 emotion/styled-componens
 
-#### 其他: // styled-jsx/
+#### 意想不到的解决方案: // [tachyons](http://tachyons.io/) [tailwind.css](https://github.com/tailwindlabs/tailwindcss)
 
-#### 意想不到的解决方案: // [tachyons](http://tachyons.io/) [tailwind](https://github.com/tailwindlabs/tailwindcss)
+### `npm config set legacy-peer-deps true` `npm install --save react-scripts`
+
+#### 其他: // [styled-jsx](https://www.npmjs.com/package/styled-jsx#getting-started) npm i --save styled-jsx
+
+**用法**(scss)
+
+1. yarn add styled-jsx
+2. yarn add -D node-sass styled-jsx-plugin-sass (在 tsx 中,需要下载类型库 `yarn add --save @types/styled-jsx`)
+3. .babelrc 配置
+   `{ "plugins": [ [ "styled-jsx/babel", { "plugins": ["styled-jsx-plugin-sass"] } ] ] }`
+4. 其他
+
+- 三方 UI 库的支持:
+  相对有点繁琐，思想是取得 styled-jsx 转化过后的类名，注入到三方库的 className props 里，这样即解决了支持，又保全了局部 css，代码如下
+
+```
+import Link from 'react-router-dom' // 例子，给Link组件添加样式
+
+const scoped = resolveScopedStyles(
+  <scope>
+    <style jsx>{'.link { color: green }'}</style>
+  </scope>
+)
+
+const App = ({ children }) => (
+  <div>
+    {children}
+    <Link to="/about" className={`link ${scoped.className}`}>
+      About
+    </Link>
+
+    {scoped.styles}
+  </div>
+);
+
+function resolveScopedStyles(scope) {
+  return {
+    className: scope.props.className, //就是被styled-jsx添加的独特className
+    styles: scope.props.children      //就是style，注入到App组件中
+  }
+}
+
+```
+
+5. 插件
+
+- [高亮](https://marketplace.visualstudio.com/items?itemName=blanu.vscode-styled-jsx)
+- [语法补全](https://marketplace.visualstudio.com/items?itemName=AndrewRazumovsky.vscode-styled-jsx-languageserver)
+
+#### display:grid
+
+```
+<!-- grid box -->
+display: grid;
+grid-template-rows: 6rem 1fr 6rem;
+grid-template-columns: 20rem 1fr 20rem;
+grid-template-areas:
+"header header header"
+"nav main aside"
+"footer footer footer";
+height: 100vh;
+
+<!-- grid area -->
+grid-area: XXX ;
+```

@@ -17,7 +17,7 @@ export const RegisterScreen: React.FC = () => {
         name="username"
         rules={[{ required: true, message: "请输入用户名" }]}
       >
-        <Input placeholder="用户名" type="text" />
+        <Input placeholder="用户名" type="text" autoComplete="" />
       </Form.Item>
       <Form.Item
         name="password"
@@ -29,6 +29,7 @@ export const RegisterScreen: React.FC = () => {
           }
           placeholder="密码"
           type="password"
+          autoComplete=""
         />
       </Form.Item>
       <Button block className={"mx-auto"} htmlType="submit" type="primary">

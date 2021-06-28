@@ -3,7 +3,7 @@ import { SearchPannel } from "./SearchPannel";
 import React, { useState, useEffect } from "react";
 import { cleanObj, useMount, useDebounce, useArray } from "../../../utils";
 import { useHttp } from "../../../http";
-
+import styles from "./index.module.css";
 export interface IParam {
   name: string;
   personId: string;
@@ -32,9 +32,10 @@ export const ProjectList: React.FC = () => {
   });
 
   return (
-    <div>
-      <List list={list} users={users} />
+    <div className={styles["contentContainer"]}>
+      <h1>项目列表</h1>
       <SearchPannel param={param} setParam={setParam} users={users} />
+      <List list={list} users={users} />
     </div>
   );
 };
