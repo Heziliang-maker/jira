@@ -23,7 +23,9 @@ export const AuthicatedApp: React.FC = () => {
             overlay={
               <Menu>
                 <Menu.Item key="layout">
-                  <a onClick={logout}>登出</a>
+                  <Button type="link" onClick={logout}>
+                    登出
+                  </Button>
                 </Menu.Item>
               </Menu>
             }

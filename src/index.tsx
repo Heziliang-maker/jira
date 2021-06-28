@@ -3,15 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { loadDevTools } from "jira-dev-tool";
+import { loadServer, DevTools } from "jira-dev-tool";
 import { AppProviders } from "./context/index";
 // 务必在jira-devtool后引入
 import "antd/dist/antd.less";
 import "./index.css";
 
-loadDevTools(() => {
+loadServer(() => {
   ReactDOM.render(
     <AppProviders>
+      <DevTools />
       <App />
     </AppProviders>,
     document.getElementById("root")

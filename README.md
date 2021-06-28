@@ -142,3 +142,5 @@ height: 100vh;
 <!-- grid area -->
 grid-area: XXX ;
 ```
+
+6. ts-disable-next-line xxx 规则
