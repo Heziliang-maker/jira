@@ -28,7 +28,7 @@ export const AuthicatedApp: React.FC = () => {
               </Menu>
             }
           >
-            <a onClick={(e) => e.preventDefault()}>Hi,{user?.name}</a>
+            <Button type="link">Hi,{user?.name}</Button>
           </Dropdown>
         </div>
       </div>
