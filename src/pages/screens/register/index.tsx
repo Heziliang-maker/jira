@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { Form, Button, Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+
 export const RegisterScreen: React.FC = () => {
   const { register } = useAuth();
 

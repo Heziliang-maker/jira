@@ -3,7 +3,9 @@ import { SearchPannel } from "./SearchPannel";
 import React, { useState, useEffect } from "react";
 import { cleanObj, useMount, useDebounce, useArray } from "../../../utils";
 import { useHttp } from "../../../http";
+import { useAsync } from "../../../utils/use-async";
 import styles from "./index.module.css";
+import { Typography } from "antd";
 export interface IParam {
   name: string;
   personId: string;
@@ -15,16 +17,18 @@ export const ProjectList: React.FC = () => {
     personId: "",
   });
 
-  const [list, setList] = useState([]);
   const [users, setUsers] = useState([]);
 
   const client = useHttp();
+
+  const { isLoading, run, error, data: list } = useAsync<any>();
 
   const deboucedParam = useDebounce(param, 1000);
   // 参数变化 获取数据
   useEffect(() => {
     // name=${param.name}&personId=${param.personId}
-    client(`projects`, { data: cleanObj(deboucedParam) }).then(setList);
+    // client(`projects`, { data: cleanObj(deboucedParam) }).then(setList);
+    run(client(`projects`, { data: cleanObj(deboucedParam) }));
   }, [useDebounce(deboucedParam)]);
   // 初始化
   useMount(() => {
@@ -35,7 +39,10 @@ export const ProjectList: React.FC = () => {
     <div className={styles["contentContainer"]}>
       <h1>项目列表</h1>
       <SearchPannel param={param} setParam={setParam} users={users} />
-      <List list={list} users={users} />
+      {error ? (
+        <Typography.Text type={"danger"}>{error}</Typography.Text>
+      ) : null}
+      <List dataSource={list} users={users} loading={isLoading} />
     </div>
   );
 };

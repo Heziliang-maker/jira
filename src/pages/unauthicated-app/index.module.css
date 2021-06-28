@@ -10,5 +10,5 @@
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
   text-align: center;
-  margin: 16rem auto;
+  margin: 16rem auto !important;
 }

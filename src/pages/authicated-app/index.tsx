@@ -34,12 +34,12 @@ export const AuthicatedApp: React.FC = () => {
           </Dropdown>
         </div>
       </div>
-      <div className={styles["page-nav"]}>nav</div>
+      <div className={styles["page-nav"]}></div>
       <div className={styles["page-main"]}>
         <ProjectList />
       </div>
-      <div className={styles["page-aside"]}>aside</div>
-      <div className={styles["page-footer"]}>footer</div>
+      <div className={styles["page-aside"]}></div>
+      <div className={styles["page-footer"]}></div>
     </div>
   );
 };

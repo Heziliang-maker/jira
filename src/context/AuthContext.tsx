@@ -19,6 +19,7 @@ export const bootstrapUser = async () => {
   return user;
 };
 
+
 const authContext =
   createContext<
     | {

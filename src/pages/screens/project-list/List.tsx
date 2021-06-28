@@ -1,14 +1,13 @@
 import React from "react";
 import { IUser } from "./SearchPannel";
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 
-interface IPropsType {
-  list: any[];
+interface IPropsType extends TableProps<any> {
   users: IUser[];
 }
 
-export const List: React.FC<IPropsType> = ({ list, users }) => {
+export const List: React.FC<IPropsType> = ({ users, ...props }) => {
   return (
     <Table
       pagination={false}
@@ -46,7 +45,7 @@ export const List: React.FC<IPropsType> = ({ list, users }) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   );
 };

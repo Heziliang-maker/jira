@@ -16,3 +16,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+div,
+ul,
+li {
+  outline: 1px solid #00cec9;
+}
